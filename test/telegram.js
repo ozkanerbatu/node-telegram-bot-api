@@ -48,14 +48,11 @@ let FILE_ID;
 let GAME_CHAT_ID;
 let GAME_MSG_ID;
 
-before(function beforeAll() {
+before(async function beforeAll() {
   utils.startStaticServer(staticPort);
-  return utils.startMockServer(pollingPort)
-    .then(() => {
-      return utils.startMockServer(pollingPort2);
-    }).then(() => {
-      return utils.startMockServer(badTgServerPort, { bad: true });
-    });
+  await utils.startMockServer(pollingPort);
+  await utils.startMockServer(pollingPort2);
+  return await utils.startMockServer(badTgServerPort, { bad: true });
 });
 
 
